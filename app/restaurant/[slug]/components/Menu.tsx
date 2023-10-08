@@ -1,7 +1,7 @@
-import React from "react";
+import { Item } from "@prisma/client";
 import MenuCard from "./MenuCard";
 
-export default function Menu() {
+export default function Menu({ menu }: { menu: Item[] }) {
   return (
     <main className="bg-white mt-5">
       <div>
@@ -9,7 +9,13 @@ export default function Menu() {
           <h1 className="font-bold text-4xl">Menu</h1>
         </div>
         <div className="flex flex-wrap justify-between">
-          <MenuCard />
+          {menu.length ? (
+            menu.map((menuItem) => (
+              <MenuCard key={menuItem.id} item={menuItem} />
+            ))
+          ) : (
+            <p>This restaurant does not have a menu</p>
+          )}
         </div>
       </div>
     </main>

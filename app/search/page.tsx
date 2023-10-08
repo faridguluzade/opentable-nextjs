@@ -1,8 +1,14 @@
+"use client";
+
+import { useSearchParams } from "next/navigation";
 import Header from "./components/Header";
 import RestaurantCard from "./components/RestaurantCard";
 import SearchSideBar from "./components/SearchSideBar";
 
 export default function Search() {
+  const searchParams = useSearchParams();
+
+  console.log(searchParams.get("city"));
   return (
     <>
       <Header />
