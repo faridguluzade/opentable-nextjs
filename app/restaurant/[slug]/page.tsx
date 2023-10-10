@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import { PrismaClient, Review } from "@prisma/client";
 
 import Description from "./components/Description";
@@ -34,7 +35,9 @@ const fetchRestaurantBySlug = async (slug: string): Promise<Restaurant> => {
     },
   });
 
-  if (!restaurant) throw new Error();
+  if (!restaurant) {
+    notFound();
+  }
 
   return restaurant;
 };
