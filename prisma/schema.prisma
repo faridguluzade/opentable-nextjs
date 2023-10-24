@@ -69,7 +69,7 @@ model User {
   last_name  String
   city       String
   password   String
-  email      String
+  email      String   @unique
   phone      String
   reviews    Review[]
 }
