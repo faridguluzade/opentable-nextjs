@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import validator from "validator";
 import { PrismaClient } from "@prisma/client";
+import validator from "validator";
+import bcrypt from "bcrypt";
 
 const prisma = new PrismaClient();
 
@@ -67,8 +68,21 @@ export default async function handler(
       return res.status(400).json({ errorMessage: "Email already in use!" });
     }
 
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = await prisma.user.create({
+      data: {
+        first_name: firstName,
+        last_name: lastName,
+        password: hashedPassword,
+        email,
+        city,
+        phone,
+      },
+    });
+
     res.status(200).json({
-      hello: "body",
+      hello: user,
     });
   }
 }
