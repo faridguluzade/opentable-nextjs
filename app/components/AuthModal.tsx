@@ -29,7 +29,7 @@ export default function AuthModal({ isSignin }: { isSignin: boolean }) {
     password: "",
   });
   const [disabled, setDisabled] = useState(true);
-  const { signin, signup, loading, error } = useAuth();
+  const { signin, signup, data, loading, error } = useAuth();
 
   useEffect(() => {
     if (isSignin) {
@@ -104,6 +104,10 @@ export default function AuthModal({ isSignin }: { isSignin: boolean }) {
               <div className="uppercase font-bold text-center pb-2 border-b mb-2">
                 <p className="text-sm">
                   {renderContent("Sign In", "Create Account")}
+                </p>
+                <p>
+                  {data?.firstName}
+                  {data?.lastName}
                 </p>
               </div>
               <div className="m-auto">
