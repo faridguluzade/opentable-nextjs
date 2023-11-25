@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
+import Alert from "@mui/material/Alert";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import { useAuth } from "../../hooks/useAuth";
@@ -91,10 +92,15 @@ export default function AuthModal({ isSignin }: { isSignin: boolean }) {
         <Box sx={style}>
           {loading ? (
             <div className="py-2 h-[500px] flex justify-center items-center">
-              <CircularProgress disableShrink />;
+              <CircularProgress disableShrink />
             </div>
           ) : (
             <div className="py-2 h-[500px]">
+              {error && (
+                <Alert severity="error" className="mb-4">
+                  {error}
+                </Alert>
+              )}
               <div className="uppercase font-bold text-center pb-2 border-b mb-2">
                 <p className="text-sm">
                   {renderContent("Sign In", "Create Account")}
