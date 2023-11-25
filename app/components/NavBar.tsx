@@ -6,7 +6,7 @@ import AuthModal from "./AuthModal";
 import { useAuth } from "../../hooks/useAuth";
 
 export default function NavBar() {
-  const { data, loading } = useAuth();
+  const { data, loading, signout } = useAuth();
 
   return (
     <nav className="bg-white p-2 flex justify-between">
@@ -17,8 +17,11 @@ export default function NavBar() {
         {!loading && (
           <div className="flex">
             {data && (
-              <button className="bg-blue-400 text-white mr-3  border p-1 px-4 rounded">
-                Logout
+              <button
+                className="bg-blue-400 text-white mr-3  border p-1 px-4 rounded"
+                onClick={signout}
+              >
+                Sign out
               </button>
             )}
 
