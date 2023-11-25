@@ -3,11 +3,11 @@
 import React, { createContext, useState } from "react";
 
 interface User {
-  id: number;
   first_name: string;
   last_name: string;
   email: string;
   city: string;
+  phone: number;
 }
 
 interface State {

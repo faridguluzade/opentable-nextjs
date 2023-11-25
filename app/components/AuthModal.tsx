@@ -29,9 +29,7 @@ export default function AuthModal({ isSignin }: { isSignin: boolean }) {
     password: "",
   });
   const [disabled, setDisabled] = useState(true);
-  const { data, loading, error, signin } = useAuth();
-
-  console.log(loading);
+  const { signin, signup, loading, error } = useAuth();
 
   useEffect(() => {
     if (isSignin) {
@@ -68,7 +66,9 @@ export default function AuthModal({ isSignin }: { isSignin: boolean }) {
 
   const handleClick = () => {
     if (isSignin) {
-      signin({ email: inputs.email, password: inputs.password });
+      signin({ email: inputs.email, password: inputs.password }, handleClose);
+    } else {
+      signup(inputs, handleClose);
     }
   };
 
