@@ -1,8 +1,8 @@
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 
-import Modal from "@mui/material/Modal";
+import { useAuth } from "../../hooks/useAuth";
 import AuthModalInputs from "./AuthModalInputs";
 
 const style = {
@@ -26,6 +26,27 @@ export default function AuthModal({ isSignin }: { isSignin: boolean }) {
     city: "",
     password: "",
   });
+  const [disabled, setDisabled] = useState(true);
+  const { signin } = useAuth();
+
+  useEffect(() => {
+    if (isSignin) {
+      if (inputs.email && inputs.password) {
+        setDisabled(false);
+      }
+    } else {
+      if (
+        inputs.firstName &&
+        inputs.lastName &&
+        inputs.email &&
+        inputs.phone &&
+        inputs.city &&
+        inputs.password
+      ) {
+        setDisabled(false);
+      }
+    }
+  }, [inputs]);
 
   const renderContent = (signinContent: string, signupContent: string) => {
     return isSignin ? signinContent : signupContent;
@@ -39,6 +60,12 @@ export default function AuthModal({ isSignin }: { isSignin: boolean }) {
       ...inputs,
       [e.target.name]: e.target.value,
     });
+  };
+
+  const handleClick = () => {
+    if (isSignin) {
+      signin({ email: inputs.email, password: inputs.password });
+    }
   };
 
   return (
@@ -77,7 +104,11 @@ export default function AuthModal({ isSignin }: { isSignin: boolean }) {
                 inputs={inputs}
                 isSignIn={isSignin}
               />
-              <button className="bg-red-600 uppercase w-full text-white p-3 rounded text-sm mb-5 disabled:bg-gray-400">
+              <button
+                className="bg-red-600 uppercase w-full text-white p-3 rounded text-sm mb-5 disabled:bg-gray-400"
+                disabled={disabled}
+                onClick={handleClick}
+              >
                 {renderContent("Sign In", "Create Account")}
               </button>
             </div>
