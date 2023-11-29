@@ -2,9 +2,11 @@ import { useState } from "react";
 import axios from "axios";
 
 export function useAvailabilities() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<
+    { time: string; available: boolean }[] | null
+  >(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
 
   const fetchAvailabilities = async ({
     slug,

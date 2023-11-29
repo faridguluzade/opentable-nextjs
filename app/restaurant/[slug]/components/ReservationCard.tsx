@@ -1,8 +1,11 @@
 "use client";
+import Link from "next/link";
 import { useState } from "react";
 import DatePicker from "react-datepicker";
+import { CircularProgress } from "@mui/material";
 
 import { useAvailabilities } from "../../../../hooks/useAvailabilities";
+import { convertToDisplayTime } from "../../../../utils/helper";
 
 import { partySize as partySizes } from "../../../../data/partySize";
 import { times } from "../../../../data/times";
@@ -22,6 +25,8 @@ export default function ReservationCard({
   const [partySize, setPartySize] = useState("2");
   const [day, setDay] = useState(new Date().toISOString().split("T")[0]);
 
+  console.log({ data });
+
   const handleChangeDate = (date: Date | null) => {
     if (date) {
       setDay(date.toISOString().split("T")[0]);
@@ -31,14 +36,7 @@ export default function ReservationCard({
   };
 
   const handleClick = () => {
-    // fetchAvailabilities({
-    //   slug,
-    //   day,
-    //   time,
-    //   partySize,
-    // });
-
-    console.log({
+    fetchAvailabilities({
       slug,
       day,
       time,
@@ -117,10 +115,33 @@ export default function ReservationCard({
         <button
           onClick={handleClick}
           className="bg-red-600 rounded w-full px-4 text-white font-bold h-16"
+          disabled={isLoading}
         >
-          Find a Time
+          {isLoading ? <CircularProgress color="inherit" /> : "Find a Time"}
         </button>
       </div>
+
+      {data?.length && (
+        <div className="mt">
+          <p className="text-reg mt-1 font-bold">Select a Time</p>
+          <div className="flex flex-wrap mt-2">
+            {data.map((time) =>
+              time.available ? (
+                <Link
+                  href={`reserve/${slug}?date=${day}T${time.time}&partySize=${partySize}`}
+                  className="bg-red-600 cursor-pointer p-2 w-26 text-center text-white mb-3 rounded mr-3"
+                >
+                  <p className="text-sm font-bold">
+                    {convertToDisplayTime(time.time)}
+                  </p>
+                </Link>
+              ) : (
+                <p className="bg-gray-300 p-2 w-24 mb-3 rounded mr-3"></p>
+              )
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
