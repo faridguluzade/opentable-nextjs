@@ -21,7 +21,7 @@ export function useAvailabilities() {
   }) => {
     setIsLoading(true);
     try {
-      const res = await axios(
+      const res = await axios.get(
         `http://localhost:3000/api/restaurant/${slug}/availability`,
         {
           params: {
