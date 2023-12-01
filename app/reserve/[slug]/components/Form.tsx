@@ -1,39 +1,92 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 export default function Form() {
+  const [inputs, setInputs] = useState({
+    bookerFirstName: "",
+    bookerLastName: "",
+    bookerEmail: "",
+    bookerPhone: "",
+    bookerRequest: "",
+    bookerOccasion: "",
+  });
+  const [disabled, setDisabled] = useState(true);
+
+  useEffect(() => {
+    if (
+      inputs.bookerFirstName &&
+      inputs.bookerLastName &&
+      inputs.bookerEmail &&
+      inputs.bookerPhone
+    ) {
+      return setDisabled(false);
+    }
+
+    return setDisabled(true);
+  }, [inputs]);
+
+  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputs({
+      ...inputs,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   return (
     <div className="mt-10 flex flex-wrap justify-between w-[660px]">
       <input
         type="text"
         className="border rounded p-3 w-80 mb-4"
         placeholder="First name"
+        name="bookerFirstName"
+        value={inputs.bookerFirstName}
+        onChange={handleChangeInput}
       />
       <input
         type="text"
         className="border rounded p-3 w-80 mb-4"
         placeholder="Last name"
+        name="bookerLastName"
+        value={inputs.bookerLastName}
+        onChange={handleChangeInput}
       />
       <input
         type="text"
         className="border rounded p-3 w-80 mb-4"
         placeholder="Phone number"
+        name="bookerEmail"
+        value={inputs.bookerEmail}
+        onChange={handleChangeInput}
       />
       <input
         type="text"
         className="border rounded p-3 w-80 mb-4"
         placeholder="Email"
+        name="bookerPhone"
+        value={inputs.bookerPhone}
+        onChange={handleChangeInput}
       />
       <input
         type="text"
         className="border rounded p-3 w-80 mb-4"
         placeholder="Occasion (optional)"
+        name="bookerRequest"
+        value={inputs.bookerRequest}
+        onChange={handleChangeInput}
       />
       <input
         type="text"
         className="border rounded p-3 w-80 mb-4"
         placeholder="Requests (optional)"
+        name="bookerOccasion"
+        value={inputs.bookerOccasion}
+        onChange={handleChangeInput}
       />
-      <button className="bg-red-600 w-full p-3 text-white font-bold rounded disabled:bg-gray-300">
+      <button
+        disabled={disabled}
+        className="bg-red-600 w-full p-3 text-white font-bold rounded disabled:bg-gray-300"
+      >
         Complete reservation
       </button>
       <p className="mt-4 text-sm">

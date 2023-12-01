@@ -1308,15 +1308,15 @@ export default async function handler(
   await prisma.table.createMany({
     data: [
       {
-        resturant_id: vivaanId,
+        restaurant_id: vivaanId,
         seats: 4,
       },
       {
-        resturant_id: vivaanId,
+        restaurant_id: vivaanId,
         seats: 4,
       },
       {
-        resturant_id: vivaanId,
+        restaurant_id: vivaanId,
         seats: 2,
       },
     ],
